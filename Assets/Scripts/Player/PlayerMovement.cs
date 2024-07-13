@@ -5,10 +5,12 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private float rotateSpeed = 100f;
 
     private Rigidbody m_rb;
-
+    private Animator m_animator;
+    
     // Start is called before the first frame update
     void Start() {
         m_rb = GetComponent<Rigidbody>();
+        m_animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -21,5 +23,7 @@ public class PlayerMovement : MonoBehaviour {
         m_rb.MovePosition(m_rb.position +
                           transform.forward * (Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime) +
                           transform.right * (Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime));
+        m_animator.SetFloat("BlendV", Input.GetAxis("Vertical"));
+        m_animator.SetFloat("BlendH", Input.GetAxis("Horizontal"));
     }
 }
