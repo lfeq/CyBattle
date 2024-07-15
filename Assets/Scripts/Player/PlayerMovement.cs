@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
@@ -11,6 +12,12 @@ public class PlayerMovement : MonoBehaviour {
     void Start() {
         m_rb = GetComponent<Rigidbody>();
         m_animator = GetComponent<Animator>();
+    }
+
+    private void Update() {
+        if (Input.GetButtonDown("Jump")) {
+            m_rb.AddForce(Vector3.up * (1200 * Time.deltaTime), ForceMode.VelocityChange);
+        }
     }
 
     // Update is called once per frame
