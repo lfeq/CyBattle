@@ -9877,6 +9877,7 @@ GameObject:
   - component: {fileID: 2766213471881563743}
   - component: {fileID: 8430291972235043742}
   - component: {fileID: 3440513951161081579}
+  - component: {fileID: 8365223867885193039}
   m_Layer: 0
   m_Name: YBot
   m_TagString: Player
@@ -10083,6 +10084,28 @@ MonoBehaviour:
   - {fileID: 2491052644764886414}
   - {fileID: 5491787795821225716}
   - {fileID: 3451861536389299459}
+--- !u!114 &8365223867885193039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6000447114019255847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6036195309319143862
 GameObject:
   m_ObjectHideFlags: 0
