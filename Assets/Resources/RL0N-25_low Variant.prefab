@@ -2091,6 +2091,8 @@ GameObject:
   - component: {fileID: 7188633336195454765}
   - component: {fileID: 7570804636888112578}
   - component: {fileID: 8042906427943655785}
+  - component: {fileID: 7203141085320929635}
+  - component: {fileID: -6371030104450960121}
   m_Layer: 0
   m_Name: RL0N-25_low Variant
   m_TagString: Untagged
@@ -2310,6 +2312,35 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &7203141085320929635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7041660145853276317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616ed2e05ac6b1041b4dfd59729504f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+--- !u!114 &-6371030104450960121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7041660145853276317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &7088322350419889170
 GameObject:
   m_ObjectHideFlags: 0

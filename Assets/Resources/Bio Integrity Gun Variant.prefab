@@ -179,6 +179,8 @@ GameObject:
   - component: {fileID: 6260992216875701782}
   - component: {fileID: 803506059464310848}
   - component: {fileID: 5408261456309441138}
+  - component: {fileID: -795433103344707963}
+  - component: {fileID: 3651314983819160674}
   m_Layer: 0
   m_Name: Bio Integrity Gun Variant
   m_TagString: Untagged
@@ -369,10 +371,40 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 3651314983819160674}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-795433103344707963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4119160359967920943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616ed2e05ac6b1041b4dfd59729504f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+--- !u!114 &3651314983819160674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4119160359967920943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &5649619438958915520
 GameObject:
   m_ObjectHideFlags: 0

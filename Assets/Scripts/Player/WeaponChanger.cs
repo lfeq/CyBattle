@@ -16,6 +16,7 @@ public class WeaponChanger : MonoBehaviour {
     private GameObject m_cameraGameObject;
     private Transform m_aimTarget;
     private int m_weaponNumber = 0;
+    private GameObject m_testForWeapons;
 
     private void Start() {
         m_cameraGameObject = GameObject.Find("Player Camera");
@@ -27,6 +28,12 @@ public class WeaponChanger : MonoBehaviour {
         m_camera = m_cameraGameObject.GetComponent<CinemachineVirtualCamera>();
         m_camera.Follow = transform;
         m_camera.LookAt = transform;
+        m_testForWeapons = GameObject.Find("Weapon1Pickup(Clone)");
+        if (m_testForWeapons != null) {
+            return;
+        }
+        GameObject spawner = GameObject.Find("SpawnScript");
+        spawner.GetComponent<SpawnCharacters>().spawnWeaponStart();
         //Invoke(nameof(setLookAt), 0.1f);
     }
 
@@ -47,7 +54,7 @@ public class WeaponChanger : MonoBehaviour {
         rightHand.data.target = rightTargets[m_weaponNumber];
         rig.Build();
     }
-    
+
     // private void setLookAt() {
     //     if (m_aimTarget == null) {
     //         return;
