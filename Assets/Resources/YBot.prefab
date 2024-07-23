@@ -2598,6 +2598,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3451861536389299459}
   - component: {fileID: 300548424622271024}
+  - component: {fileID: 5500731131763210618}
   m_Layer: 0
   m_Name: Bio Integrity Gun
   m_TagString: Untagged
@@ -2640,6 +2641,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48948dfe9d76b07488dacd46a7955fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5500731131763210618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3381931065309603934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3443032562887592187
 GameObject:
   m_ObjectHideFlags: 0
@@ -8572,6 +8595,7 @@ GameObject:
   - component: {fileID: 7658035419319440934}
   - component: {fileID: 6962820365512314868}
   - component: {fileID: 421193936664068892}
+  - component: {fileID: 3687209158689337493}
   m_Layer: 0
   m_Name: Sci-Fi Gun
   m_TagString: Untagged
@@ -8658,6 +8682,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48948dfe9d76b07488dacd46a7955fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3687209158689337493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4647803692924805516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4682636674465930613
 GameObject:
   m_ObjectHideFlags: 0
@@ -10203,9 +10249,9 @@ MonoBehaviour:
   - {fileID: 6863512807002346358}
   - {fileID: 6395033755757892469}
   weapons:
-  - {fileID: 2491052644764886414}
-  - {fileID: 5491787795821225716}
-  - {fileID: 3451861536389299459}
+  - {fileID: 3381931065309603934}
+  - {fileID: 7065536598331858969}
+  - {fileID: 4647803692924805516}
   aimObjects:
   - {fileID: 2238005526155074405}
   - {fileID: 8873396035596192935}
@@ -10838,6 +10884,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5491787795821225716}
   - component: {fileID: 4872435229102913796}
+  - component: {fileID: 7695479007661873534}
   m_Layer: 0
   m_Name: RL0N-25_low
   m_TagString: Untagged
@@ -10905,6 +10952,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48948dfe9d76b07488dacd46a7955fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7695479007661873534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7065536598331858969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7069738915698868375
 GameObject:
   m_ObjectHideFlags: 0

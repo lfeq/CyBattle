@@ -17,8 +17,10 @@ public class WeaponChanger : MonoBehaviour {
     private Transform m_aimTarget;
     private int m_weaponNumber = 0;
     private GameObject m_testForWeapons;
+    private PhotonView m_photonView;
 
     private void Start() {
+        m_photonView = GetComponent<PhotonView>();
         m_cameraGameObject = GameObject.Find("Player Camera");
         //m_aimTarget = GameObject.Find("Aim Reference").transform;
         if (!gameObject.GetComponent<PhotonView>().IsMine) {
@@ -39,10 +41,14 @@ public class WeaponChanger : MonoBehaviour {
 
 
     private void Update() {
+        if (!m_photonView.IsMine) {
+            return;
+        }
         if (!Input.GetMouseButtonDown(1)) {
             return;
         }
         m_weaponNumber++;
+        m_photonView.RPC("change", RpcTarget.AllBuffered);
         if (m_weaponNumber > weapons.Length - 1) {
             m_weaponNumber = 0;
         }
@@ -55,15 +61,17 @@ public class WeaponChanger : MonoBehaviour {
         rig.Build();
     }
 
-    // private void setLookAt() {
-    //     if (m_aimTarget == null) {
-    //         return;
-    //     }
-    //     foreach (MultiAimConstraint t in aimObjects) {
-    //         WeightedTransformArray target = t.data.sourceObjects;
-    //         target.SetTransform(0, m_aimTarget.transform);
-    //         t.data.sourceObjects = target;
-    //     }
-    //     rig.Build();
-    // }
+    [PunRPC]
+    private void change() { 
+        if (m_weaponNumber > weapons.Length - 1) {
+            m_weaponNumber = 0;
+        }
+        foreach (GameObject t in weapons) {
+            t.SetActive(false);
+        }
+        weapons[m_weaponNumber].SetActive(true);
+        leftHand.data.target = leftTargets[m_weaponNumber];
+        rightHand.data.target = rightTargets[m_weaponNumber];
+        rig.Build();
+    }
 }
