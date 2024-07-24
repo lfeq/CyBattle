@@ -1,7 +1,10 @@
+using Photon.Pun;
+using TMPro;
 using UnityEngine;
 
 public class LookAt : MonoBehaviour {
     [SerializeField] private GameObject crosshair;
+    [SerializeField] private TMP_Text nicknameText;
     
     private Vector3 m_worldPosition;
     private Vector3 m_screenPosition;
@@ -10,6 +13,7 @@ public class LookAt : MonoBehaviour {
     private void Start() {
         m_camera = Camera.main;
         Cursor.visible = false;
+        nicknameText.text = PhotonNetwork.LocalPlayer.NickName;
     }
 
     private void FixedUpdate() {
