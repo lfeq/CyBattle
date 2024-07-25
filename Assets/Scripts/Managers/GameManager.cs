@@ -1,7 +1,7 @@
-using System;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviourPunCallbacks {
     [SerializeField] private TMP_InputField playerNickname;
@@ -33,14 +33,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
     public override void OnConnectedToMaster() {
         Debug.Log("I'm connected to the server!!!");
-        PhotonNetwork.JoinRandomRoom();
-    }
-
-    public override void OnJoinedRoom() {
-        PhotonNetwork.LoadLevel("Floor layout");
-    }
-
-    public override void OnJoinRandomFailed(short t_returnCode, string t_message) {
-        PhotonNetwork.CreateRoom("Arena1");
+        SceneManager.LoadScene("Lobby");
     }
 }
