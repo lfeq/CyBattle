@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using Cinemachine;
 using Photon.Pun;
+using TMPro;
+using UnityEngine.UI;
 
 public class WeaponChanger : MonoBehaviour {
     [SerializeField] private TwoBoneIKConstraint leftHand;
@@ -11,6 +13,8 @@ public class WeaponChanger : MonoBehaviour {
     [SerializeField] private Transform[] rightTargets;
     [SerializeField] private GameObject[] weapons;
     [SerializeField] private MultiAimConstraint[] aimObjects;
+    [SerializeField] private Sprite[] weaponIcons;
+    [SerializeField] private int[] ammoAmounts;
 
     private CinemachineVirtualCamera m_camera;
     private GameObject m_cameraGameObject;
@@ -18,6 +22,8 @@ public class WeaponChanger : MonoBehaviour {
     private int m_weaponNumber = 0;
     private GameObject m_testForWeapons;
     private PhotonView m_photonView;
+    private Image m_weaponIcon;
+    private TMP_Text m_ammoText;
 
     private void Start() {
         m_photonView = GetComponent<PhotonView>();
@@ -36,6 +42,8 @@ public class WeaponChanger : MonoBehaviour {
         }
         GameObject spawner = GameObject.Find("SpawnScript");
         spawner.GetComponent<SpawnCharacters>().spawnWeaponStart();
+        m_weaponIcon = GameObject.Find("Weapon UI").GetComponent<Image>();
+        m_ammoText = GameObject.Find("AmmoText").GetComponent<TMP_Text>();
         //Invoke(nameof(setLookAt), 0.1f);
     }
 
@@ -51,18 +59,22 @@ public class WeaponChanger : MonoBehaviour {
         m_photonView.RPC("change", RpcTarget.AllBuffered);
         if (m_weaponNumber > weapons.Length - 1) {
             m_weaponNumber = 0;
+            m_weaponIcon.sprite = weaponIcons[0];
+            m_ammoText.text = ammoAmounts[0].ToString();
         }
         foreach (GameObject t in weapons) {
             t.SetActive(false);
         }
         weapons[m_weaponNumber].SetActive(true);
+        m_weaponIcon.sprite = weaponIcons[m_weaponNumber];
+        m_ammoText.text = ammoAmounts[m_weaponNumber].ToString();
         leftHand.data.target = leftTargets[m_weaponNumber];
         rightHand.data.target = rightTargets[m_weaponNumber];
         rig.Build();
     }
 
     [PunRPC]
-    private void change() { 
+    private void change() {
         if (m_weaponNumber > weapons.Length - 1) {
             m_weaponNumber = 0;
         }
