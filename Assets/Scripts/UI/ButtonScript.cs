@@ -32,7 +32,7 @@ public class ButtonScript : MonoBehaviour {
     private void selectColor(int t_buttonNumber, int t_myId) {
         m_players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject player in m_players) {
-            player.GetComponent<DisplayColor>().viewId[t_buttonNumber] = m_myId;
+            player.GetComponent<DisplayColor>().viewId[t_buttonNumber] = t_myId;
             player.GetComponent<DisplayColor>().chooseColor();
         }
         m_timerGameObject.GetComponent<Timer>().beginTimer();

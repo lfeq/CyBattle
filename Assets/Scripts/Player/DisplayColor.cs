@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DisplayColor : MonoBehaviourPunCallbacks {
     public int[] viewId;
+    public AudioClip[] m_gunShotSounds;
 
     [SerializeField] private int[] buttonNumbers;
     [SerializeField] private Color[] colors;
@@ -13,6 +14,7 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
     private GameObject m_waitFoPlayers;
 
     private void Start() {
+        Debug.Log(gameObject.name);
         m_namesObject = GameObject.Find("Names Background");
         m_waitFoPlayers = GameObject.Find("Waiting Background");
     }
@@ -28,6 +30,21 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
 
     public void chooseColor() {
         GetComponent<PhotonView>().RPC("assignColor", RpcTarget.AllBuffered);
+    }
+
+    public void playGunShot(string t_name, int t_weaponNumber) {
+        GetComponent<PhotonView>().RPC("playSound", RpcTarget.All, t_name, t_weaponNumber);
+    }
+
+    [PunRPC]
+    private void playSound(string t_name, int t_weaponNumber) {
+        for (int i = 0; i < m_namesObject.GetComponent<NicknamesScript>().name.Length; i++) {
+            if (t_name == m_namesObject.GetComponent<NicknamesScript>().names[i].text) {
+                GetComponent<AudioSource>().clip = m_gunShotSounds[t_weaponNumber];
+                GetComponent<AudioSource>().Play();
+                return;
+            }
+        }
     }
 
     [PunRPC]

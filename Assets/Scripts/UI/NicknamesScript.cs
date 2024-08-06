@@ -12,7 +12,6 @@ public class NicknamesScript : MonoBehaviourPunCallbacks {
 
     private void Start() {
         waitObject = GameObject.Find("Waiting Background");
-        waitObject = GameObject.Find("Waiting Background");
         foreach (TMP_Text nameText in names) {
             nameText.gameObject.SetActive(false);
         }

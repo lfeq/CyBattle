@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using Cinemachine;
 using Photon.Pun;
 using TMPro;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class WeaponChanger : MonoBehaviour {
@@ -15,6 +17,7 @@ public class WeaponChanger : MonoBehaviour {
     [SerializeField] private MultiAimConstraint[] aimObjects;
     [SerializeField] private Sprite[] weaponIcons;
     [SerializeField] private int[] ammoAmounts;
+    [SerializeField] private GameObject[] muzzleFlash;
 
     private CinemachineVirtualCamera m_camera;
     private GameObject m_cameraGameObject;
@@ -52,25 +55,28 @@ public class WeaponChanger : MonoBehaviour {
         if (!m_photonView.IsMine) {
             return;
         }
-        if (!Input.GetMouseButtonDown(1)) {
-            return;
+        if (Input.GetMouseButtonDown(0)) {
+            GetComponent<DisplayColor>().playGunShot(GetComponent<PhotonView>().Owner.NickName, m_weaponNumber);
+            GetComponent<PhotonView>().RPC("gunMuzzleFlash", RpcTarget.All);
         }
-        m_weaponNumber++;
-        m_photonView.RPC("change", RpcTarget.AllBuffered);
-        if (m_weaponNumber > weapons.Length - 1) {
-            m_weaponNumber = 0;
-            m_weaponIcon.sprite = weaponIcons[0];
-            m_ammoText.text = ammoAmounts[0].ToString();
+        if (Input.GetMouseButtonDown(1)) {
+            m_weaponNumber++;
+            m_photonView.RPC("change", RpcTarget.AllBuffered);
+            if (m_weaponNumber > weapons.Length - 1) {
+                m_weaponNumber = 0;
+                m_weaponIcon.sprite = weaponIcons[0];
+                m_ammoText.text = ammoAmounts[0].ToString();
+            }
+            foreach (GameObject t in weapons) {
+                t.SetActive(false);
+            }
+            weapons[m_weaponNumber].SetActive(true);
+            m_weaponIcon.sprite = weaponIcons[m_weaponNumber];
+            m_ammoText.text = ammoAmounts[m_weaponNumber].ToString();
+            leftHand.data.target = leftTargets[m_weaponNumber];
+            rightHand.data.target = rightTargets[m_weaponNumber];
+            rig.Build();
         }
-        foreach (GameObject t in weapons) {
-            t.SetActive(false);
-        }
-        weapons[m_weaponNumber].SetActive(true);
-        m_weaponIcon.sprite = weaponIcons[m_weaponNumber];
-        m_ammoText.text = ammoAmounts[m_weaponNumber].ToString();
-        leftHand.data.target = leftTargets[m_weaponNumber];
-        rightHand.data.target = rightTargets[m_weaponNumber];
-        rig.Build();
     }
 
     [PunRPC]
@@ -85,5 +91,21 @@ public class WeaponChanger : MonoBehaviour {
         leftHand.data.target = leftTargets[m_weaponNumber];
         rightHand.data.target = rightTargets[m_weaponNumber];
         rig.Build();
+    }
+
+    [PunRPC]
+    private void gunMuzzleFlash() {
+        muzzleFlash[m_weaponNumber].SetActive(true);
+        StartCoroutine(muzzleOff());
+    }
+
+    [PunRPC]
+    private void muzzleFlashOff() {
+        muzzleFlash[m_weaponNumber].SetActive(false);
+    }
+
+    private IEnumerator muzzleOff() {
+        yield return new WaitForSeconds(0.03f);
+        GetComponent<PhotonView>().RPC("muzzleFlashOff", RpcTarget.All);
     }
 }
