@@ -10518,6 +10518,10 @@ MonoBehaviour:
   - {fileID: 3546389460207844886}
   - {fileID: 1755013388156025182}
   - {fileID: 4454080480025962460}
+  damageAmounts:
+  - 0.1
+  - 0.2
+  - 0.3
 --- !u!114 &8365223867885193039
 MonoBehaviour:
   m_ObjectHideFlags: 0

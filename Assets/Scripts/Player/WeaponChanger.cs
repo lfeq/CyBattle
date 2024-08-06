@@ -18,6 +18,7 @@ public class WeaponChanger : MonoBehaviour {
     [SerializeField] private Sprite[] weaponIcons;
     [SerializeField] private int[] ammoAmounts;
     [SerializeField] private GameObject[] muzzleFlash;
+    [SerializeField] private float[] damageAmounts;
 
     private CinemachineVirtualCamera m_camera;
     private GameObject m_cameraGameObject;
@@ -27,6 +28,8 @@ public class WeaponChanger : MonoBehaviour {
     private PhotonView m_photonView;
     private Image m_weaponIcon;
     private TMP_Text m_ammoText;
+    private string shooterName;
+    private string gotShotName;
 
     private void Start() {
         m_photonView = GetComponent<PhotonView>();
@@ -58,6 +61,21 @@ public class WeaponChanger : MonoBehaviour {
         if (Input.GetMouseButtonDown(0)) {
             GetComponent<DisplayColor>().playGunShot(GetComponent<PhotonView>().Owner.NickName, m_weaponNumber);
             GetComponent<PhotonView>().RPC("gunMuzzleFlash", RpcTarget.All);
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+            if (Physics.Raycast(ray, out hit, 500)) {
+                if (hit.transform.gameObject.GetComponent<PhotonView>() != null) {
+                    gotShotName = hit.transform.gameObject.GetComponent<PhotonView>().Owner.NickName;
+                }
+                if (hit.transform.gameObject.GetComponent<DisplayColor>() != null) {
+                    hit.transform.gameObject.GetComponent<DisplayColor>().deliverDamage(
+                        hit.transform.gameObject.GetComponent<PhotonView>().Owner.NickName,
+                        damageAmounts[m_weaponNumber]);
+                }
+                shooterName = GetComponent<PhotonView>().Owner.NickName;
+            }
+            gameObject.layer = LayerMask.NameToLayer("Default");
         }
         if (Input.GetMouseButtonDown(1)) {
             m_weaponNumber++;

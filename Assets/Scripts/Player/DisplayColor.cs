@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DisplayColor : MonoBehaviourPunCallbacks {
     public int[] viewId;
@@ -28,6 +29,10 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
         }
     }
 
+    public void deliverDamage(string name, float damageAmount) {
+        GetComponent<PhotonView>().RPC("gunDamage", RpcTarget.AllBuffered, name, damageAmount);
+    }
+
     public void chooseColor() {
         GetComponent<PhotonView>().RPC("assignColor", RpcTarget.AllBuffered);
     }
@@ -43,6 +48,16 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
                 GetComponent<AudioSource>().clip = m_gunShotSounds[t_weaponNumber];
                 GetComponent<AudioSource>().Play();
                 return;
+            }
+        }
+    }
+
+    [PunRPC]
+    private void gunDamage(string name, float damageAmount) {
+        for (int i = 0; i < m_namesObject.GetComponent<NicknamesScript>().names.Length; i++) {
+            if (name == m_namesObject.GetComponent<NicknamesScript>().names[i].text) {
+                m_namesObject.GetComponent<NicknamesScript>().healthBars[i].gameObject.GetComponent<Image>()
+                    .fillAmount -= damageAmount;
             }
         }
     }
