@@ -10410,6 +10410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b5808b915173e4e86fd487f4c09adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
   movementSpeed: 7
   rotateSpeed: 200
 --- !u!114 &8430291972235043742
@@ -10490,6 +10491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04915fe02efd8d941b24f091c6576d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
   leftHand: {fileID: 2501784116641168777}
   rightHand: {fileID: 2213992045599821112}
   rig: {fileID: 8430291972235043742}
@@ -10613,7 +10615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewId: 000000000100000002000000030000000400000005000000
-  m_gunShotSounds:
+  gunShotSounds:
   - {fileID: 8300000, guid: 93fba0b1bf5014543918fa775911b6a3, type: 3}
   - {fileID: 8300000, guid: 733a0ff7727334749a0381b7092162b3, type: 3}
   - {fileID: 8300000, guid: 56f5b6fa20679894d8658d743a03e1e4, type: 3}

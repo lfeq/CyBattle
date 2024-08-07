@@ -8,6 +8,8 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class WeaponChanger : MonoBehaviour {
+    public bool isDead = false;
+    
     [SerializeField] private TwoBoneIKConstraint leftHand;
     [SerializeField] private TwoBoneIKConstraint rightHand;
     [SerializeField] private RigBuilder rig;
@@ -58,8 +60,11 @@ public class WeaponChanger : MonoBehaviour {
         if (!m_photonView.IsMine) {
             return;
         }
+        if (isDead) {
+            return;
+        }
         if (Input.GetMouseButtonDown(0)) {
-            GetComponent<DisplayColor>().playGunShot(GetComponent<PhotonView>().Owner.NickName, m_weaponNumber);
+            GetComponent<DisplayColor>().PlayGunShot(GetComponent<PhotonView>().Owner.NickName, m_weaponNumber);
             GetComponent<PhotonView>().RPC("gunMuzzleFlash", RpcTarget.All);
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -69,7 +74,7 @@ public class WeaponChanger : MonoBehaviour {
                     gotShotName = hit.transform.gameObject.GetComponent<PhotonView>().Owner.NickName;
                 }
                 if (hit.transform.gameObject.GetComponent<DisplayColor>() != null) {
-                    hit.transform.gameObject.GetComponent<DisplayColor>().deliverDamage(
+                    hit.transform.gameObject.GetComponent<DisplayColor>().DeliverDamage(
                         hit.transform.gameObject.GetComponent<PhotonView>().Owner.NickName,
                         damageAmounts[m_weaponNumber]);
                 }

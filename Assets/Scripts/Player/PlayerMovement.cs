@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
+    public bool isDead = false;
+    
     [SerializeField] private float movementSpeed = 3.5f;
     [SerializeField] private float rotateSpeed = 100f;
 
@@ -16,6 +18,9 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Update() {
+        if (isDead) {
+            return;
+        }
         if (Input.GetButtonDown("Jump") && m_canJump) {
             m_canJump = false;
             m_rb.AddForce(Vector3.up * (1200 * Time.deltaTime), ForceMode.VelocityChange);
@@ -24,6 +29,9 @@ public class PlayerMovement : MonoBehaviour {
     }
     
     void FixedUpdate() {
+        if (isDead) {
+            return;
+        }
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
         Vector3 rotateY = new Vector3(0, Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime, 0);
         if (movement != Vector3.zero) {
