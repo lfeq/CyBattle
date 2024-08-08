@@ -10599,6 +10599,12 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 2
     Name: BlendH
+  - Type: 4
+    SynchronizeType: 2
+    Name: Hit
+  - Type: 4
+    SynchronizeType: 2
+    Name: Dead
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -12521,6 +12527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbd4353b5b115a64190d818fa5ad4861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
 --- !u!1 &8721718354408648124
 GameObject:
   m_ObjectHideFlags: 0

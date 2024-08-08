@@ -48,8 +48,10 @@ public class WeaponChanger : MonoBehaviour {
         if (m_testForWeapons != null) {
             return;
         }
-        GameObject spawner = GameObject.Find("SpawnScript");
-        spawner.GetComponent<SpawnCharacters>().spawnWeaponStart();
+        if (gameObject.GetComponent<PhotonView>().Owner.IsMasterClient) {
+            GameObject spawner = GameObject.Find("SpawnScript");
+            spawner.GetComponent<SpawnCharacters>().spawnWeaponStart();
+        }
         m_weaponIcon = GameObject.Find("Weapon UI").GetComponent<Image>();
         m_ammoText = GameObject.Find("AmmoText").GetComponent<TMP_Text>();
         //Invoke(nameof(setLookAt), 0.1f);
@@ -75,6 +77,7 @@ public class WeaponChanger : MonoBehaviour {
                 }
                 if (hit.transform.gameObject.GetComponent<DisplayColor>() != null) {
                     hit.transform.gameObject.GetComponent<DisplayColor>().DeliverDamage(
+                        GetComponent<PhotonView>().Owner.NickName,
                         hit.transform.gameObject.GetComponent<PhotonView>().Owner.NickName,
                         damageAmounts[m_weaponNumber]);
                 }

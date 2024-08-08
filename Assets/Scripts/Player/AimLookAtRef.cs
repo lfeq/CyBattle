@@ -2,6 +2,8 @@ using Photon.Pun;
 using UnityEngine;
 
 public class AimLookAtRef : MonoBehaviour {
+    public bool isDead = false;
+    
     private GameObject m_lookAtObject;
     private PhotonView m_photonView;
 
@@ -11,7 +13,7 @@ public class AimLookAtRef : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (m_photonView.IsMine) {
+        if (m_photonView.IsMine && !isDead) {
             transform.position = m_lookAtObject.transform.position;
         }
     }

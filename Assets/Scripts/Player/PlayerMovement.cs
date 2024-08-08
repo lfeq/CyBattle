@@ -1,4 +1,5 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
@@ -10,11 +11,14 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody m_rb;
     private Animator m_animator;
     private bool m_canJump;
+    private Vector3 startPosition;
+    private bool respawned = false;
     
     // Start is called before the first frame update
     void Start() {
         m_rb = GetComponent<Rigidbody>();
         m_animator = GetComponent<Animator>();
+        startPosition = transform.position;
     }
 
     private void Update() {
@@ -32,6 +36,10 @@ public class PlayerMovement : MonoBehaviour {
         if (isDead) {
             return;
         }
+        if (isDead && !respawned) {
+            respawned = true;
+            StartCoroutine(respawnWait());
+        }
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
         Vector3 rotateY = new Vector3(0, Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime, 0);
         if (movement != Vector3.zero) {
@@ -43,8 +51,17 @@ public class PlayerMovement : MonoBehaviour {
         m_animator.SetFloat("BlendV", Input.GetAxis("Vertical"));
         m_animator.SetFloat("BlendH", Input.GetAxis("Horizontal"));
     }
+    
     private IEnumerator jumpAgain() {
         yield return new WaitForSeconds(1);
         m_canJump = true;
+    }
+
+    private IEnumerator respawnWait() {
+        yield return new WaitForSeconds(3);
+        isDead = false;
+        respawned = false;
+        transform.position = startPosition;
+        GetComponent<DisplayColor>().respawn(GetComponent<PhotonView>().Owner.NickName);
     }
 }

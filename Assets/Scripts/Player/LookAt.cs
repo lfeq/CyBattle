@@ -17,7 +17,7 @@ public class LookAt : MonoBehaviour {
 
     private void FixedUpdate() {
         m_screenPosition = Input.mousePosition;
-        m_screenPosition.z = 3f;
+        m_screenPosition.z = 6f;
         m_worldPosition = m_camera.ScreenToWorldPoint(m_screenPosition);
         transform.position = m_worldPosition;
         crosshair.transform.position = Input.mousePosition;
