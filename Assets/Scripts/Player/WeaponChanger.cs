@@ -18,7 +18,7 @@ public class WeaponChanger : MonoBehaviour {
     [SerializeField] private GameObject[] weapons;
     [SerializeField] private MultiAimConstraint[] aimObjects;
     [SerializeField] private Sprite[] weaponIcons;
-    [SerializeField] private int[] ammoAmounts;
+    [SerializeField] public int[] ammoAmounts;
     [SerializeField] private GameObject[] muzzleFlash;
     [SerializeField] private float[] damageAmounts;
 
@@ -32,10 +32,16 @@ public class WeaponChanger : MonoBehaviour {
     private TMP_Text m_ammoText;
     private string shooterName;
     private string gotShotName;
+    private GameObject choosePanel;
 
     private void Start() {
         m_photonView = GetComponent<PhotonView>();
         m_cameraGameObject = GameObject.Find("Player Camera");
+        choosePanel = GameObject.Find("ChoosePanel");
+        ammoAmounts[0] = 60;
+        ammoAmounts[1] = 0;
+        ammoAmounts[2] = 0;
+        m_ammoText.text = ammoAmounts[0].ToString();
         //m_aimTarget = GameObject.Find("Aim Reference").transform;
         if (!gameObject.GetComponent<PhotonView>().IsMine) {
             gameObject.GetComponent<PlayerMovement>().enabled = false;
@@ -65,7 +71,12 @@ public class WeaponChanger : MonoBehaviour {
         if (isDead) {
             return;
         }
+        if (!choosePanel.activeInHierarchy) {
+            return;
+        }
         if (Input.GetMouseButtonDown(0)) {
+            ammoAmounts[m_weaponNumber]--;
+            m_ammoText.text = ammoAmounts[m_weaponNumber].ToString();
             GetComponent<DisplayColor>().PlayGunShot(GetComponent<PhotonView>().Owner.NickName, m_weaponNumber);
             GetComponent<PhotonView>().RPC("gunMuzzleFlash", RpcTarget.All);
             RaycastHit hit;
@@ -103,6 +114,10 @@ public class WeaponChanger : MonoBehaviour {
             rightHand.data.target = rightTargets[m_weaponNumber];
             rig.Build();
         }
+    }
+
+    public void updatePickup() {
+        m_ammoText.text = ammoAmounts[m_weaponNumber].ToString();
     }
 
     [PunRPC]

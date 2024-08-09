@@ -1,13 +1,14 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class KillCount : MonoBehaviour {
     public List<Kills> highestKillsList = new List<Kills>();
     public TMP_Text[] textNames;
     public TMP_Text[] textKills;
+    public bool countDown = true;
+    public GameObject winnerPanel;
+    public TMP_Text winnerText;
 
     private GameObject m_killCountPanel;
     private GameObject m_namesGameObject;
@@ -20,7 +21,7 @@ public class KillCount : MonoBehaviour {
     }
 
     private void Update() {
-        if (!Input.GetKeyDown(KeyCode.K)) {
+        if (!Input.GetKeyDown(KeyCode.K) && countDown) {
             return;
         }
         switch (m_isKillCountOn) {
@@ -49,6 +50,30 @@ public class KillCount : MonoBehaviour {
                 m_killCountPanel.SetActive(false);
                 m_isKillCountOn = false;
                 break;
+        }
+    }
+
+    public void timeOver() {
+        m_killCountPanel.SetActive(true);
+        winnerPanel.SetActive(true);
+        m_isKillCountOn = true;
+        highestKillsList.Clear();
+        for (int i = 0; i < textNames.Length; i++) {
+            highestKillsList.Add(new Kills(m_namesGameObject.GetComponent<NicknamesScript>().names[i].text,
+                m_namesGameObject.GetComponent<NicknamesScript>().kills[i]));
+        }
+        highestKillsList.Sort();
+        winnerText.text = highestKillsList[0].playerName;
+        for (int i = 0; i < textNames.Length; i++) {
+            textNames[i].text = highestKillsList[i].playerName;
+            textKills[i].text = highestKillsList[i].playerKills.ToString();
+        }
+        for (int i = 0; i < textNames.Length; i++) {
+            if (textNames[i].text != "Name") {
+                continue;
+            }
+            textNames[i].text = "";
+            textKills[i].text = "";
         }
     }
 }

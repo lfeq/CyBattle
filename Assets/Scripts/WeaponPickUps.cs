@@ -5,6 +5,8 @@ using UnityEngine.Serialization;
 
 [RequireComponent(typeof(AudioSource))]
 public class WeaponPickUps : MonoBehaviour {
+    public int ammoRefillAmount = 60;
+    
     [FormerlySerializedAs("m_respawnTime")] [SerializeField]
     private float respawnTime;
 
@@ -20,6 +22,8 @@ public class WeaponPickUps : MonoBehaviour {
         if (t_other.CompareTag("Player")) {
             gameObject.GetComponent<PhotonView>().RPC("playPickupAudio", RpcTarget.All);
             gameObject.GetComponent<PhotonView>().RPC("turnOff", RpcTarget.All);
+            t_other.GetComponent<WeaponChanger>().ammoAmounts[weaponType - 1] += ammoRefillAmount;
+            t_other.GetComponent<WeaponChanger>().updatePickup();
         }
     }
 

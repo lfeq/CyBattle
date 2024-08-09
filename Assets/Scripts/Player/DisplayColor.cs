@@ -7,7 +7,9 @@ using UnityEngine.UI;
 
 public class DisplayColor : MonoBehaviourPunCallbacks {
     public int[] viewId;
-    [FormerlySerializedAs("m_gunShotSounds")] public AudioClip[] gunShotSounds;
+
+    [FormerlySerializedAs("m_gunShotSounds")]
+    public AudioClip[] gunShotSounds;
 
     [SerializeField] private int[] buttonNumbers;
     [SerializeField] private Color[] colors;
@@ -16,9 +18,9 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
     private GameObject m_waitFoPlayers;
 
     private void Start() {
-        Debug.Log(gameObject.name);
         m_namesObject = GameObject.Find("Names Background");
         m_waitFoPlayers = GameObject.Find("Waiting Background");
+        InvokeRepeating("CheckTime", 1, 1);
     }
 
     private void Update() {
@@ -33,7 +35,7 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
         }
     }
 
-    public void DeliverDamage(string shooterName,string name, float damageAmount) {
+    public void DeliverDamage(string shooterName, string name, float damageAmount) {
         GetComponent<PhotonView>().RPC("GunDamage", RpcTarget.AllBuffered, shooterName, name, damageAmount);
     }
 
@@ -138,6 +140,16 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
                 GetComponentInChildren<AimLookAtRef>().isDead = false;
                 gameObject.layer = LayerMask.NameToLayer("Default");
             }
+        }
+    }
+    
+    private void CheckTime() {
+        if (m_namesObject.GetComponent<Timer>().timeStop) {
+            GetComponent<PlayerMovement>().isDead = true;
+            GetComponent<PlayerMovement>().gameOver = true;
+            GetComponent<WeaponChanger>().isDead = true;
+            GetComponentInChildren<AimLookAtRef>().isDead = true;
+            gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
     public bool isDead = false;
+    public bool gameOver = false;
     
     [SerializeField] private float movementSpeed = 3.5f;
     [SerializeField] private float rotateSpeed = 100f;
@@ -13,17 +14,25 @@ public class PlayerMovement : MonoBehaviour {
     private bool m_canJump;
     private Vector3 startPosition;
     private bool respawned = false;
+    private GameObject respawnPanel;
     
     // Start is called before the first frame update
     void Start() {
         m_rb = GetComponent<Rigidbody>();
         m_animator = GetComponent<Animator>();
         startPosition = transform.position;
+        respawnPanel = GameObject.Find("Respawn Panel");
     }
 
     private void Update() {
         if (isDead) {
             return;
+        }
+        if (isDead && !respawned && !gameOver) {
+            respawned = true;
+            respawnPanel.SetActive(true);
+            respawnPanel.GetComponent<RespawnTimer>().enabled = true;
+            StartCoroutine(respawnWait());
         }
         if (Input.GetButtonDown("Jump") && m_canJump) {
             m_canJump = false;
@@ -36,10 +45,7 @@ public class PlayerMovement : MonoBehaviour {
         if (isDead) {
             return;
         }
-        if (isDead && !respawned) {
-            respawned = true;
-            StartCoroutine(respawnWait());
-        }
+        respawnPanel.SetActive(false);
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
         Vector3 rotateY = new Vector3(0, Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime, 0);
         if (movement != Vector3.zero) {
