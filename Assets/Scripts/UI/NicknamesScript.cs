@@ -10,7 +10,8 @@ public class NicknamesScript : MonoBehaviourPunCallbacks {
     public GameObject displayPanel;
     public TMP_Text messageText;
     public int[] kills;
-
+    public bool teamMode = false;
+    
     private GameObject waitObject;
 
     private void Start() {

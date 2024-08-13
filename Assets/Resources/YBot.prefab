@@ -10411,6 +10411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
+  gameOver: 0
   movementSpeed: 7
   rotateSpeed: 200
 --- !u!114 &8430291972235043742
@@ -10621,6 +10622,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewId: 000000000100000002000000030000000400000005000000
+  teamColors:
+  - {r: 0.5137255, g: 0.078431375, b: 0.11764706, a: 1}
+  - {r: 0.5137255, g: 0.078431375, b: 0.11764706, a: 1}
+  - {r: 0.5137255, g: 0.078431375, b: 0.11764706, a: 1}
+  - {r: 0, g: 0.56078434, b: 0.27058825, a: 1}
+  - {r: 0, g: 0.56078434, b: 0.27058825, a: 1}
+  - {r: 0, g: 0.56078434, b: 0.27058825, a: 1}
   gunShotSounds:
   - {fileID: 8300000, guid: 93fba0b1bf5014543918fa775911b6a3, type: 3}
   - {fileID: 8300000, guid: 733a0ff7727334749a0381b7092162b3, type: 3}

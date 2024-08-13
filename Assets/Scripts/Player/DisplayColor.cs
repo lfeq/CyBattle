@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class DisplayColor : MonoBehaviourPunCallbacks {
     public int[] viewId;
+    public Color[] teamColors;
 
     [FormerlySerializedAs("m_gunShotSounds")]
     public AudioClip[] gunShotSounds;
@@ -16,11 +17,13 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
 
     private GameObject m_namesObject;
     private GameObject m_waitFoPlayers;
+    private bool teamMode = false;
 
     private void Start() {
         m_namesObject = GameObject.Find("Names Background");
         m_waitFoPlayers = GameObject.Find("Waiting Background");
         InvokeRepeating("CheckTime", 1, 1);
+        teamMode = m_namesObject.GetComponent<NicknamesScript>().teamMode;
     }
 
     private void Update() {
@@ -85,10 +88,18 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
     [PunRPC]
     private void AssignColor() {
         for (int i = 0; i < viewId.Length; i++) {
-            if (GetComponent<PhotonView>().ViewID == viewId[i]) {
-                transform.GetChild(1).GetComponent<Renderer>().material.color = colors[i];
-                m_namesObject.GetComponent<NicknamesScript>().names[i].gameObject.SetActive(true);
-                m_namesObject.GetComponent<NicknamesScript>().names[i].text = GetComponent<PhotonView>().Owner.NickName;
+            if (!teamMode) {
+                if (GetComponent<PhotonView>().ViewID == viewId[i]) {
+                    transform.GetChild(1).GetComponent<Renderer>().material.color = colors[i];
+                    m_namesObject.GetComponent<NicknamesScript>().names[i].gameObject.SetActive(true);
+                    m_namesObject.GetComponent<NicknamesScript>().names[i].text = GetComponent<PhotonView>().Owner.NickName;
+                }
+            } else if (teamMode) {
+                if (GetComponent<PhotonView>().ViewID == viewId[i]) {
+                    transform.GetChild(1).GetComponent<Renderer>().material.color = teamColors[i];
+                    m_namesObject.GetComponent<NicknamesScript>().names[i].gameObject.SetActive(true);
+                    m_namesObject.GetComponent<NicknamesScript>().names[i].text = GetComponent<PhotonView>().Owner.NickName;
+                }
             }
         }
     }
