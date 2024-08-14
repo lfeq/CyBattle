@@ -26,9 +26,16 @@ public class Timer : MonoBehaviour {
         float seconds = Mathf.FloorToInt(m_timeRemaining % 60);
         timerText.text = $"{minutes:00}:{seconds:00}";
         if (m_timeRemaining <= 0) {
-            canvas.GetComponent<KillCount>().countDown = false;
-            canvas.GetComponent<KillCount>().timeOver();
-            timeStop = true;
+            if (this.gameObject.GetComponent<NicknamesScript>().teamMode == false) {
+                canvas.GetComponent<KillCount>().countDown = false;
+                canvas.GetComponent<KillCount>().timeOver();
+                timeStop = true;
+            }
+            if (this.gameObject.GetComponent<NicknamesScript>().teamMode == true) {
+                canvas.GetComponent<TeamKillCount>().countDown = false;
+                canvas.GetComponent<TeamKillCount>().timeOver();
+                timeStop = true;
+            }
         }
     }
 
