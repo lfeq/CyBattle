@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Lobby.unity
     guid: e39d7b69944a1904196a59b011e0e2d2
   - enabled: 1
-    path: Assets/Scenes/Floor layout.unity
+    path: Assets/Scenes/TeamBattle.unity
     guid: 3f04d49d9fc035146931c7f968bd76b8
   m_configObjects: {}

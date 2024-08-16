@@ -76,4 +76,9 @@ public class KillCount : MonoBehaviour {
             textKills[i].text = "";
         }
     }
+
+    public void noRespawnWinner(string name) {
+        winnerPanel.SetActive(true);
+        winnerText.text = name;
+    }
 }

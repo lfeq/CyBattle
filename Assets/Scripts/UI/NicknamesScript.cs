@@ -11,10 +11,15 @@ public class NicknamesScript : MonoBehaviourPunCallbacks {
     public TMP_Text messageText;
     public int[] kills;
     public bool teamMode = false;
-    
+    public bool noRespawn = false;
+    public GameObject eliminationPanel;
+
     private GameObject waitObject;
 
     private void Start() {
+        if (noRespawn) {
+            eliminationPanel.SetActive(false);
+        }
         displayPanel.SetActive(false);
         waitObject = GameObject.Find("Waiting Background");
         foreach (TMP_Text nameText in names) {

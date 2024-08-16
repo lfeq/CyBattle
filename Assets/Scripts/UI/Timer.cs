@@ -18,6 +18,10 @@ public class Timer : MonoBehaviour {
     }
 
     private void Update() {
+        if (!GetComponent<NicknamesScript>().noRespawn) {
+            timerText.text = "";
+            return;
+        }
         if (!m_timeIsRunning) {
             return;
         }

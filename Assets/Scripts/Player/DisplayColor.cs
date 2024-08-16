@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -18,12 +19,15 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
     private GameObject m_namesObject;
     private GameObject m_waitFoPlayers;
     private bool teamMode = false;
+    private bool isRespawn = false;
 
     private void Start() {
         m_namesObject = GameObject.Find("Names Background");
         m_waitFoPlayers = GameObject.Find("Waiting Background");
         InvokeRepeating("CheckTime", 1, 1);
         teamMode = m_namesObject.GetComponent<NicknamesScript>().teamMode;
+        isRespawn = m_namesObject.GetComponent<NicknamesScript>().noRespawn;
+        GetComponent<PlayerMovement>().noRespawn = isRespawn;
     }
 
     private void Update() {
@@ -36,6 +40,10 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
         if (GetComponent<Animator>().GetBool("Hit")) {
             StartCoroutine(Recover());
         }
+    }
+
+    public void noRespawnExit() {
+        StartCoroutine(waitToExit());
     }
 
     public void DeliverDamage(string shooterName, string name, float damageAmount) {
@@ -162,5 +170,11 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
             GetComponentInChildren<AimLookAtRef>().isDead = true;
             gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         }
+    }
+
+    private IEnumerator waitToExit() {
+        yield return new WaitForSeconds(3);
+        RemoveMe();
+        RoomExit();
     }
 }
