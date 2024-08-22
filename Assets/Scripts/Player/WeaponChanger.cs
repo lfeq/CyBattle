@@ -42,13 +42,15 @@ public class WeaponChanger : MonoBehaviour {
         ammoAmounts[1] = 0;
         ammoAmounts[2] = 0;
         //m_aimTarget = GameObject.Find("Aim Reference").transform;
-        if (!gameObject.GetComponent<PhotonView>().IsMine) {
-            gameObject.GetComponent<PlayerMovement>().enabled = false;
-            return;
+        if (gameObject.GetComponent<PhotonView>().IsMine) {
+            m_camera = m_cameraGameObject.GetComponent<CinemachineVirtualCamera>();
+            m_camera.Follow = transform;
+            m_camera.LookAt = transform;
         }
-        m_camera = m_cameraGameObject.GetComponent<CinemachineVirtualCamera>();
-        m_camera.Follow = transform;
-        m_camera.LookAt = transform;
+        else {
+            gameObject.GetComponent<PlayerMovement>().enabled = false;
+        }
+        
         m_testForWeapons = GameObject.Find("Weapon1Pickup(Clone)");
         if (m_testForWeapons != null) {
             return;
