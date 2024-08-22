@@ -1,4 +1,3 @@
-using System;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
@@ -18,7 +17,7 @@ public class Timer : MonoBehaviour {
     }
 
     private void Update() {
-        if (!GetComponent<NicknamesScript>().noRespawn) {
+        if (GetComponent<NicknamesScript>().noRespawn) {
             timerText.text = "";
             return;
         }

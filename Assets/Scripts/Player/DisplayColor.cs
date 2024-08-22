@@ -164,6 +164,7 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
     
     private void CheckTime() {
         if (m_namesObject.GetComponent<Timer>().timeStop) {
+            print("Check Time");
             GetComponent<PlayerMovement>().isDead = true;
             GetComponent<PlayerMovement>().gameOver = true;
             GetComponent<WeaponChanger>().isDead = true;

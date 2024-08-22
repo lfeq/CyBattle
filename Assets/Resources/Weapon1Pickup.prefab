@@ -298,5 +298,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b6c5cb5a6ea62f47a03ab2e698f7d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammoRefillAmount: 60
   respawnTime: 2
   weaponType: 1

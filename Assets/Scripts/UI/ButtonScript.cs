@@ -11,7 +11,7 @@ public class ButtonScript : MonoBehaviour {
     private void Start() {
         Cursor.visible = true;
         m_panel = GameObject.Find("ChoosePanel");
-        m_timerGameObject = GameObject.Find("Timer");
+        m_timerGameObject = GameObject.Find("Names Background");
     }
 
     public void selectButton(int t_buttonNumber) {

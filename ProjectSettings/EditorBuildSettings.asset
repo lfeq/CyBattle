@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TeamBattle.unity
     guid: 3f04d49d9fc035146931c7f968bd76b8
+  - enabled: 1
+    path: Assets/Scenes/KillCount.unity
+    guid: ad33db228ecd92a478de01eafdd53879
+  - enabled: 1
+    path: Assets/Scenes/NoRespawn.unity
+    guid: fa9c240c6b3cdd343a0a452dc0124855
   m_configObjects: {}

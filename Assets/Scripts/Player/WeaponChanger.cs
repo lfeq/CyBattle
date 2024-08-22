@@ -41,7 +41,6 @@ public class WeaponChanger : MonoBehaviour {
         ammoAmounts[0] = 60;
         ammoAmounts[1] = 0;
         ammoAmounts[2] = 0;
-        m_ammoText.text = ammoAmounts[0].ToString();
         //m_aimTarget = GameObject.Find("Aim Reference").transform;
         if (!gameObject.GetComponent<PhotonView>().IsMine) {
             gameObject.GetComponent<PlayerMovement>().enabled = false;
@@ -60,6 +59,7 @@ public class WeaponChanger : MonoBehaviour {
         }
         m_weaponIcon = GameObject.Find("Weapon UI").GetComponent<Image>();
         m_ammoText = GameObject.Find("AmmoText").GetComponent<TMP_Text>();
+        m_ammoText.text = ammoAmounts[0].ToString();
         //Invoke(nameof(setLookAt), 0.1f);
     }
 
@@ -71,7 +71,7 @@ public class WeaponChanger : MonoBehaviour {
         if (isDead) {
             return;
         }
-        if (!choosePanel.activeInHierarchy) {
+        if (choosePanel.activeInHierarchy) {
             return;
         }
         if (Input.GetMouseButtonDown(0)) {

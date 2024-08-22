@@ -10412,6 +10412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDead: 0
   gameOver: 0
+  noRespawn: 0
   movementSpeed: 7
   rotateSpeed: 200
 --- !u!114 &8430291972235043742
