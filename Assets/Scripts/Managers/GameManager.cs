@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
         if (setName == "") {
             return;
         }
-        PhotonNetwork.AutomaticallySyncScene = true;
+        //PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
         connectingGameObject.SetActive(true);
     }
