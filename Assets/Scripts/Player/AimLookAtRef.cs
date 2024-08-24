@@ -12,9 +12,9 @@ public class AimLookAtRef : MonoBehaviour {
         m_photonView = gameObject.GetComponentInParent<PhotonView>();
     }
 
-    private void FixedUpdate() {
-        if (m_photonView.IsMine && !isDead) {
-            transform.position = m_lookAtObject.transform.position;
-        }
-    }
+    // private void FixedUpdate() {
+    //     if (m_photonView.IsMine && !isDead) {
+    //         transform.position = m_lookAtObject.transform.position;
+    //     }
+    // }
 }

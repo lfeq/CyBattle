@@ -10431,7 +10431,7 @@ MonoBehaviour:
   - m_Rig: {fileID: 3854622400897499384}
     m_Active: 1
   - m_Rig: {fileID: 5806499353380699232}
-    m_Active: 1
+    m_Active: 0
   m_Effectors:
   - m_Transform: {fileID: 2616918531363094527}
     m_Style:

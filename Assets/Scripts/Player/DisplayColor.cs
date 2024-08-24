@@ -21,13 +21,14 @@ public class DisplayColor : MonoBehaviourPunCallbacks {
     private bool teamMode = false;
     private bool isRespawn = false;
 
+    // TODO: Refactor this shit. this class should only handle color selection
     private void Start() {
-        m_namesObject = GameObject.Find("Names Background");
-        m_waitFoPlayers = GameObject.Find("Waiting Background");
-        InvokeRepeating("CheckTime", 1, 1);
-        teamMode = m_namesObject.GetComponent<NicknamesScript>().teamMode;
-        isRespawn = m_namesObject.GetComponent<NicknamesScript>().noRespawn;
-        GetComponent<PlayerMovement>().noRespawn = isRespawn;
+        // m_namesObject = GameObject.Find("Names Background");
+        // m_waitFoPlayers = GameObject.Find("Waiting Background");
+        // InvokeRepeating("CheckTime", 1, 1);
+        // teamMode = m_namesObject.GetComponent<NicknamesScript>().teamMode;
+        // isRespawn = m_namesObject.GetComponent<NicknamesScript>().noRespawn;
+        // GetComponent<PlayerMovement>().noRespawn = isRespawn;
     }
 
     private void Update() {

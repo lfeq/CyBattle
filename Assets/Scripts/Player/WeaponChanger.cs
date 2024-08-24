@@ -4,12 +4,12 @@ using UnityEngine.Animations.Rigging;
 using Cinemachine;
 using Photon.Pun;
 using TMPro;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+// TODO: this class should only handle weapon changes
 public class WeaponChanger : MonoBehaviour {
     public bool isDead = false;
-    
+
     [SerializeField] private TwoBoneIKConstraint leftHand;
     [SerializeField] private TwoBoneIKConstraint rightHand;
     [SerializeField] private RigBuilder rig;
@@ -34,6 +34,7 @@ public class WeaponChanger : MonoBehaviour {
     private string gotShotName;
     private GameObject choosePanel;
 
+    // TODO: most of this should be in a player manager
     private void Start() {
         m_photonView = GetComponent<PhotonView>();
         m_cameraGameObject = GameObject.Find("Player Camera");
@@ -41,28 +42,40 @@ public class WeaponChanger : MonoBehaviour {
         ammoAmounts[0] = 60;
         ammoAmounts[1] = 0;
         ammoAmounts[2] = 0;
-        //m_aimTarget = GameObject.Find("Aim Reference").transform;
-        if (gameObject.GetComponent<PhotonView>().IsMine) {
-            m_camera = m_cameraGameObject.GetComponent<CinemachineVirtualCamera>();
-            m_camera.Follow = transform;
-            m_camera.LookAt = transform;
+        if (PhotonNetwork.IsConnected) {
+            //m_aimTarget = GameObject.Find("Aim Reference").transform;
+            if (gameObject.GetComponent<PhotonView>().IsMine) {
+                // m_camera = m_cameraGameObject.GetComponent<CinemachineVirtualCamera>();
+                // m_camera.Follow = transform;
+                // m_camera.LookAt = transform;
+            }
+            else {
+                gameObject.GetComponent<PlayerMovement>().enabled = false;
+            }
         }
         else {
-            gameObject.GetComponent<PlayerMovement>().enabled = false;
+            GetComponent<PhotonView>().enabled = false;
+            GetComponent<PhotonTransformView>().enabled = false;
+            GetComponent<PhotonAnimatorView>().enabled = false;
         }
-        
         m_testForWeapons = GameObject.Find("Weapon1Pickup(Clone)");
         if (m_testForWeapons != null) {
             return;
         }
-        if (gameObject.GetComponent<PhotonView>().Owner.IsMasterClient) {
-            GameObject spawner = GameObject.Find("SpawnScript");
-            spawner.GetComponent<SpawnCharacters>().spawnWeaponStart();
-        }
-        m_weaponIcon = GameObject.Find("Weapon UI").GetComponent<Image>();
-        m_ammoText = GameObject.Find("AmmoText").GetComponent<TMP_Text>();
-        m_ammoText.text = ammoAmounts[0].ToString();
+        // if (gameObject.GetComponent<PhotonView>().Owner.IsMasterClient) {
+        //     GameObject spawner = GameObject.Find("SpawnScript");
+        //     spawner.GetComponent<SpawnCharacters>().spawnWeaponStart();
+        // }
+        // m_weaponIcon = GameObject.Find("Weapon UI").GetComponent<Image>();
+        // m_ammoText = GameObject.Find("AmmoText").GetComponent<TMP_Text>();
+        // m_ammoText.text = ammoAmounts[0].ToString();
         //Invoke(nameof(setLookAt), 0.1f);
+    }
+
+    public void Initialize(CinemachineVirtualCamera t_virtualCamera) {
+        // TODO: Change these lines to the camera controller script
+        t_virtualCamera.Follow = transform;
+        t_virtualCamera.LookAt = transform;
     }
 
 
