@@ -21,4 +21,4 @@ traditional camera controller where the character is offset to the side, and you
 ![New Camera Controller](Readme%20Extras/NewCameraMovement.gif)
 
 The new camera controller was made using the [starter asset third-person controller](https://assetstore.unity.com/packages/essentials/starter-assets-thirdperson-updates-in-new-charactercontroller-pa-196526)
-from unity, and I changed added some new animations from [mixamo](https://www.mixamo.com/#/).
+from unity, and I added some new animations from [mixamo](https://www.mixamo.com/#/).
