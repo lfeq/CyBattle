@@ -8,10 +8,12 @@ namespace StarterAssets
 	public class StarterAssetsInputs : MonoBehaviour
 	{
 		[Header("Character Input Values")]
+		public bool sprint;
+
 		public Vector2 move;
 		public Vector2 look;
 		public bool jump;
-		public bool sprint;
+		public bool Fire;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -38,6 +40,11 @@ namespace StarterAssets
 		{
 			JumpInput(value.isPressed);
 		}
+		
+		public void OnFire(InputValue value)
+		{
+			FireInput(value.isPressed);
+		}
 
 		public void OnSprint(InputValue value)
 		{
@@ -59,6 +66,11 @@ namespace StarterAssets
 		public void JumpInput(bool newJumpState)
 		{
 			jump = newJumpState;
+		}
+		
+		public void FireInput(bool newJumpState)
+		{
+			Fire = newJumpState;
 		}
 
 		public void SprintInput(bool newSprintState)
