@@ -1,7 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class LobbyScript : MonoBehaviourPunCallbacks {
@@ -15,7 +14,8 @@ public class LobbyScript : MonoBehaviourPunCallbacks {
     }
 
     public void joinGameKillCount() {
-        levelName = "KillCount";
+        levelName = "SampleScene";
+        //levelName = "KillCount"; // Original level
         PhotonNetwork.JoinLobby(m_killCount);
     }
     

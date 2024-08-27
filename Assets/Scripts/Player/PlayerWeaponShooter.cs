@@ -2,7 +2,7 @@ using UnityEngine;
 using StarterAssets;
 
 // TODO: Finish this class to shoot
-[RequireComponent(typeof(StarterAssets.StarterAssetsInputs))]
+[RequireComponent(typeof(StarterAssetsInputs))]
 public class PlayerWeaponShooter : MonoBehaviour {
     private StarterAssetsInputs m_inputs;
 

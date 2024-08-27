@@ -14,19 +14,19 @@ public class LevelManager : MonoBehaviour {
                 return;
             }
             var playerObject = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, quaternion.identity);
-            var weaponChanger = playerObject.GetComponent<WeaponChanger>();
+            var playerManager = playerObject.GetComponent<PlayerManager>();
 
             // Instantiate the camera only for the local player
-            if (!weaponChanger.GetComponent<PhotonView>().IsMine) {
+            if (!playerManager.GetComponent<PhotonView>().IsMine) {
                 return;
             }
             var virtualCamera = Instantiate(cameraPrefab).GetComponent<CinemachineVirtualCamera>();
-            weaponChanger.Initialize(virtualCamera);
+            playerManager.Initialize(virtualCamera);
         } else {
             // Fallback for offline mode or single-player testing
-            var weaponChanger = Instantiate(playerPrefab, Vector3.zero, quaternion.identity).GetComponent<WeaponChanger>();
+            var playerManager = Instantiate(playerPrefab, Vector3.zero, quaternion.identity).GetComponent<PlayerManager>();
             var virtualCamera = Instantiate(cameraPrefab).GetComponent<CinemachineVirtualCamera>();
-            weaponChanger.Initialize(virtualCamera);
+            playerManager.Initialize(virtualCamera);
         }
     }
 }
