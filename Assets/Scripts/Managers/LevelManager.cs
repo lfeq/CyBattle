@@ -25,21 +25,17 @@ public class LevelManager : MonoBehaviourPunCallbacks {
     public void SpawnPlayer() {
         if (PhotonNetwork.IsConnected) {
             // Only instantiate the player and camera for the local player
-            Debug.LogError("PhotonNetwork.IsConnected");
             if (!PhotonNetwork.IsConnectedAndReady) {
                 return;
             }
             var playerObject = PhotonNetwork.Instantiate(playerPrefab.name, GetRandomSpawnPoint(), quaternion.identity);
             var playerManager = playerObject.GetComponent<PlayerManager>();
-            Debug.LogError("Spawned player");
             // Instantiate the camera only for the local player
             if (!playerManager.GetComponent<PhotonView>().IsMine) {
                 return;
             }
             var virtualCamera = Instantiate(cameraPrefab).GetComponent<CinemachineVirtualCamera>();
-            Debug.LogError("Spawned camera");
             playerManager.Initialize(virtualCamera);
-            Debug.LogError("Initialized camera");
         }
         else {
             // Fallback for offline mode or single-player testing

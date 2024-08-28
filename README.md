@@ -1,6 +1,7 @@
 # Multiplayer Third-Person Shooter
 
-Made this game following a Udemy tutorial.
+I made this game following a tutorial to learn how to make multiplayer games in unity. 
+The project is a basic third-person shooter.
 
 ## Changes I Made
 
