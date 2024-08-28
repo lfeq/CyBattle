@@ -89,3 +89,136 @@ public class PlayerWeaponShooter : MonoBehaviour {
     }
 }
 ```
+
+#### Main Differences
+My implementation in `PlayerWeaponshooter.cs` uses helper methods to improve readability
+and works online and offline to simplify testing
+
+```csharp
+private void Update() {
+        Shoot();
+    }
+
+private void Shoot() {
+    if (!m_inputs.Fire) {
+        return;
+    }
+    ShootRaycast();
+    if (PhotonNetwork.IsConnected && m_photonView != null) {
+        // If connected to Photon, call the RPC
+        m_photonView.RPC(nameof(PlayEffects), RpcTarget.All);
+    } else {
+        // If not connected, call the method locally
+        PlayEffects();
+    }
+    m_inputs.Fire = false;
+}
+
+private void ShootRaycast() {
+    Vector2 screenCenterPoint = new Vector2(width / 2, height / 2); // Get the center of the screen
+    Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+    const float rayDistance = 500f;
+    if (Physics.Raycast(ray, out RaycastHit hit, rayDistance)) {
+        if (!hit.transform.CompareTag("Player")) {
+            return;
+        }
+        hit.transform.GetComponent<PlayerManager>().TakeDamage(10f);
+    }
+}
+
+[PunRPC]
+private void PlayEffects() {
+    muzzleFlash.Play(); // Play the particle system
+    AudioSource.PlayClipAtPoint(shootSoundClip, transform.position); // Play audio clip
+}
+```
+
+While the original implementation in `WeaponChanger.cs` has everything in the update loop. 
+It also abuses the `GetComponent<>()` function as it is not really recommended to use it every frame.
+
+```csharp
+if (Input.GetMouseButtonDown(0)) {
+    ammoAmounts[m_weaponNumber]--;
+    m_ammoText.text = ammoAmounts[m_weaponNumber].ToString();
+    GetComponent<DisplayColor>().PlayGunShot(GetComponent<PhotonView>().Owner.NickName, m_weaponNumber);
+    GetComponent<PhotonView>().RPC("gunMuzzleFlash", RpcTarget.All);
+    RaycastHit hit;
+    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+    if (Physics.Raycast(ray, out hit, 500)) {
+        if (hit.transform.gameObject.GetComponent<PhotonView>() != null) {
+            gotShotName = hit.transform.gameObject.GetComponent<PhotonView>().Owner.NickName;
+        }
+        if (hit.transform.gameObject.GetComponent<DisplayColor>() != null) {
+            hit.transform.gameObject.GetComponent<DisplayColor>().DeliverDamage(
+                GetComponent<PhotonView>().Owner.NickName,
+                hit.transform.gameObject.GetComponent<PhotonView>().Owner.NickName,
+                damageAmounts[m_weaponNumber]);
+        }
+        shooterName = GetComponent<PhotonView>().Owner.NickName;
+    }
+    gameObject.layer = LayerMask.NameToLayer("Default");
+}
+```
+
+### Health
+**WARNING: IF YOU EVER MADE A GAME WITH HEALTH AND HEALTH-BARS, THIS MIGHT BURN YOUR EYES.**
+
+If you are reading this, you have been warned about what comes next; this is your last chance to skip this.
+
+When you press left click using `WeaponChanger.cs`, which is the original implementation, if you hit an enemy you
+call this function `hit.transform.gameObject.GetComponent<DisplayColor>().DeliverDamage(
+                        GetComponent<PhotonView>().Owner.NickName,
+                        hit.transform.gameObject.GetComponent<PhotonView>().Owner.NickName,
+                        damageAmounts[m_weaponNumber]);` 
+which is already huge, it has to be split into three lines, but it gets worse. 
+When you go into that function, you see this:
+
+```csharp
+public void DeliverDamage(string shooterName, string name, float damageAmount) {
+    GetComponent<PhotonView>().RPC("GunDamage", RpcTarget.AllBuffered, shooterName, name, damageAmount);
+}
+```
+
+Still acceptable, you have to have a function that calls the RPC function, I can understand that, the problem is
+when you go to the RPC function.
+
+**LAST WARNING**
+
+```csharp
+[PunRPC]
+private void GunDamage(string shooterName, string name, float damageAmount) {
+    for (int i = 0; i < m_namesObject.GetComponent<NicknamesScript>().names.Length; i++) {
+        if (name == m_namesObject.GetComponent<NicknamesScript>().names[i].text) {
+            if (m_namesObject.GetComponent<NicknamesScript>().healthBars[i].gameObject.GetComponent<Image>()
+                    .fillAmount > 0.1f) {
+                GetComponent<Animator>().SetBool("Hit", true);
+                m_namesObject.GetComponent<NicknamesScript>().healthBars[i].gameObject.GetComponent<Image>()
+                    .fillAmount -= damageAmount;
+            }
+            else {
+                m_namesObject.GetComponent<NicknamesScript>().healthBars[i].gameObject.GetComponent<Image>()
+                    .fillAmount = 0;
+                GetComponent<Animator>().SetBool("Dead", true);
+                GetComponent<PlayerMovement>().isDead = true;
+                GetComponent<WeaponChanger>().isDead = true;
+                GetComponentInChildren<AimLookAtRef>().isDead = true;
+                m_namesObject.GetComponent<NicknamesScript>().runMessage(shooterName, name);
+                gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+            }
+        }
+    }
+}
+```
+
+I told you to skip this part! [Here](https://www.reddit.com/r/Eyebleach/comments/1f37o6u/red_panda/) is a cute red panda so you can wash your eyes. 
+
+I don't know where to begin, so I'll start saying this code block is too ugly to read. 
+Getting that off of my chest, I can explain the code. 
+FOR SOME REASON, the guy in the tutorial thought it was a great idea to have UI health-bars represent the health 
+of the players. 
+Not just like the visual representation, but as in THE value inside that UI image represents the health of the player.
+This has two glaring issues, you tightly couple the UI to the health of a player which is a big nono.
+Second, you have to check the whole list of players UI health-bars to find the correct one and modify it,
+this has a complexity of $O(n)$ for something that you could do easily in constant time 
+(it's literally changing one value!).

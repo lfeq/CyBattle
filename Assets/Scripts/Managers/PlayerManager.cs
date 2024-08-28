@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
 using Cinemachine;
 using Photon.Pun;
@@ -7,6 +5,9 @@ using StarterAssets;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour {
+    [SerializeField] private float maxHealth = 100f;
+    
+    private float currentHealth;
     private CinemachineVirtualCamera m_vcam;
     private Animator m_animator;
     private PhotonView m_photonView;
@@ -14,6 +15,7 @@ public class PlayerManager : MonoBehaviour {
     private void Start() {
         m_animator = GetComponent<Animator>();
         m_photonView = GetComponent<PhotonView>();
+        ResetHealth();
     }
 
     public void Initialize(CinemachineVirtualCamera t_virtualCamera) {
@@ -23,8 +25,11 @@ public class PlayerManager : MonoBehaviour {
         thirdPersonFollow.CameraSide = 1;
     }
 
+    public void ResetHealth() {
+        currentHealth = maxHealth;
+    }
+    
     public void TakeDamage(float t_damage) {
-        Debug.Log("Taking damage");
         m_photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All);
     }
 
@@ -32,12 +37,9 @@ public class PlayerManager : MonoBehaviour {
     private void TakeDamageRPC() {
         m_animator.SetBool("Hit", true);
         StartCoroutine(PlayAnimation());
-        //m_animator.SetBool("Hit", false);
     }
     
     private IEnumerator PlayAnimation() {
-        // Wait for the end of the frame to reset the bool
-        //m_animator.SetBool("Hit", true);
         yield return new WaitForSeconds(0.03f);
         m_animator.SetBool("Hit", false);
     }
