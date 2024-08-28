@@ -4,10 +4,13 @@ using Cinemachine;
 using StarterAssets;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
-{
+public class PlayerManager : MonoBehaviour {
+    private CinemachineVirtualCamera vcam;
+    
     public void Initialize(CinemachineVirtualCamera t_virtualCamera) {
-        //t_virtualCamera.Follow = transform;
-        t_virtualCamera.Follow = GetComponent<ThirdPersonController>().CinemachineCameraTarget.transform;
+        vcam = t_virtualCamera;
+        vcam.Follow = GetComponent<ThirdPersonController>().CinemachineCameraTarget.transform;
+        var thirdPersonFollow = vcam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+        thirdPersonFollow.CameraSide = 1;
     }
 }

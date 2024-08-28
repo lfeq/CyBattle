@@ -490,6 +490,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c8996cfdd73f942b20ed06bb8f3a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPoints:
+  - {fileID: 1552882982}
   playerPrefab: {fileID: 2931468440295203629, guid: 90746061c424cb24fb20a1266769a7c3,
     type: 3}
   cameraPrefab: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8,
