@@ -7,6 +7,7 @@ using static UnityEngine.Screen;
 public class PlayerWeaponShooter : MonoBehaviour {
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] private AudioClip shootSoundClip;
+    [SerializeField] private float weaponDamage = 10f;
     
     private StarterAssetsInputs m_inputs;
     private PhotonView m_photonView;
@@ -43,7 +44,7 @@ public class PlayerWeaponShooter : MonoBehaviour {
             if (!hit.transform.CompareTag("Player")) {
                 return;
             }
-            hit.transform.GetComponent<PlayerManager>().TakeDamage(10f);
+            hit.transform.GetComponent<PlayerManager>().TakeDamage(weaponDamage);
         }
     }
 
