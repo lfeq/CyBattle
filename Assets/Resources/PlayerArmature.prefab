@@ -848,6 +848,7 @@ MonoBehaviour:
   look: {x: 0, y: 0}
   jump: 0
   Fire: 0
+  Reload: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -996,7 +997,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   muzzleFlash: {fileID: 1019165533936792700}
   shootSoundClip: {fileID: 8300000, guid: 0e5ec5d798406aa4699be8c44dd7599f, type: 3}
+  reloadSoundClip: {fileID: 8300000, guid: 5e7f633dda3117f4f90253f51ee065f0, type: 3}
   weaponDamage: 10
+  maxAmmo: 30
+  fireRate: 0.3
+  reloadSlider: {fileID: 0}
+  reloadTimeInSeconds: 1.7
 --- !u!114 &3301119895289689028
 MonoBehaviour:
   m_ObjectHideFlags: 0
