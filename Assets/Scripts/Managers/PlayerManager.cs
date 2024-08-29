@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Cinemachine;
 using Photon.Pun;
@@ -6,28 +7,36 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour {
     public bool IsDead { get; private set; }
-    
+
     [SerializeField] private float maxHealth = 100f;
 
     private float m_currentHealth;
     private CinemachineVirtualCamera m_vcam;
     private Animator m_animator;
     private PhotonView m_photonView;
+    private HealthBarsManager m_healthBarsManager;
+    private int m_healthBarIndex;
 
     private void Start() {
+        m_healthBarsManager = FindObjectOfType<HealthBarsManager>();
         m_animator = GetComponent<Animator>();
         m_photonView = GetComponent<PhotonView>();
         ResetHealth();
         IsDead = false;
     }
 
-    public void Initialize(CinemachineVirtualCamera t_virtualCamera) {
+    public void Initialize(CinemachineVirtualCamera t_virtualCamera, HealthBarsManager t_healthBarsManager) {
+        Debug.LogError("PlayerManager::Initialize");
         m_vcam = t_virtualCamera;
         m_vcam.Follow = GetComponent<ThirdPersonController>().CinemachineCameraTarget.transform;
         var thirdPersonFollow = m_vcam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
         thirdPersonFollow.CameraSide = 1;
+        m_healthBarsManager = FindObjectOfType<HealthBarsManager>();
+        m_healthBarIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+        m_healthBarsManager.EnableHealthBar(m_healthBarIndex,
+            PhotonNetwork.IsConnected ? GetComponent<PhotonView>().Owner.NickName : "TEST PLAYER");
     }
-    
+
     public void TakeDamage(float t_damage) {
         if (PhotonNetwork.IsConnected && m_photonView is not null) {
             m_photonView.RPC(nameof(PlayDamageAnimationRPC), RpcTarget.All); // Play damage animation
@@ -35,10 +44,10 @@ public class PlayerManager : MonoBehaviour {
         }
         else {
             PlayDamageAnimationRPC();
-            ReduceHealthRPC(t_damage);                  
+            ReduceHealthRPC(t_damage);
         }
     }
-    
+
     [PunRPC]
     public void ResetHealth() {
         m_currentHealth = maxHealth;
@@ -53,6 +62,7 @@ public class PlayerManager : MonoBehaviour {
     [PunRPC]
     private void ReduceHealthRPC(float t_damage) {
         m_currentHealth -= t_damage;
+        m_healthBarsManager.UpdateHealthBar(m_healthBarIndex, m_currentHealth);
         if (!(m_currentHealth <= 0)) {
             return;
         }
@@ -60,11 +70,10 @@ public class PlayerManager : MonoBehaviour {
             m_photonView.RPC(nameof(KillPlayerRPC), RpcTarget.All); // Kill player
         }
         else {
-            KillPlayerRPC();             
+            KillPlayerRPC();
         }
     }
     
-    //TODO: kill player
     [PunRPC]
     private void KillPlayerRPC() {
         IsDead = true;

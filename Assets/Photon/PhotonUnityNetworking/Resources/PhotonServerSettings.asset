@@ -63,6 +63,11 @@ MonoBehaviour:
   - ReduceHealthRPC
   - KillPlayerRPC
   - ResetHealth
+  - PlayDamageAnimationRPC
+  - RpcEnableHealthBar
+  - RPCEnableHealthBar
+  - RPCUpdateHealthBar
+  - InitializeRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
