@@ -21,15 +21,21 @@ public class PlayerWeaponShooter : MonoBehaviour {
     private float m_fireRateCounter;
     private bool isReloading = false;
     private float reloadTimer = 0f;
+    private PlayerManager m_playerManager;
 
     private void Start() {
         m_inputs = GetComponent<StarterAssetsInputs>();
+        reloadSlider = FindObjectOfType<Slider>();
         m_photonView = GetComponent<PhotonView>();
+        m_playerManager = GetComponent<PlayerManager>();
         m_currentAmmo = maxAmmo;
         reloadSlider.gameObject.SetActive(false);
     }
 
     private void Update() {
+        if (m_playerManager.IsDead) {
+            return;
+        }
         FireRateCoutDown();
         Reloading();
         Shoot();

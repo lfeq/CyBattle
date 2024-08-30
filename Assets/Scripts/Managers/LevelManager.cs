@@ -14,6 +14,15 @@ public class LevelManager : MonoBehaviourPunCallbacks {
     [SerializeField] private GameObject cameraPrefab;
     [SerializeField] private HealthBarsManager healthBarsManager;
 
+    private void Awake() {
+        if (s_instance == null) {
+            s_instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start() {
         // Wait for the player to fully join the room before spawning
         if (PhotonNetwork.IsConnectedAndReady) {
@@ -22,12 +31,7 @@ public class LevelManager : MonoBehaviourPunCallbacks {
     }
 
     public override void OnJoinedRoom() {
-        //Debug.LogError("Joined room, now spawning player.");
         SpawnPlayer();
-    }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer) {
-        //Debug.LogError($"Player {newPlayer.NickName} joined the room");
     }
 
     public void SpawnPlayer() {
@@ -38,7 +42,6 @@ public class LevelManager : MonoBehaviourPunCallbacks {
 
             // Instantiate the camera only for the local client
             if (playerManager.GetComponent<PhotonView>().IsMine) {
-                Debug.LogError("is mine");
                 var virtualCamera = Instantiate(cameraPrefab).GetComponent<CinemachineVirtualCamera>();
                 playerManager.Initialize(virtualCamera, healthBarsManager);
             }

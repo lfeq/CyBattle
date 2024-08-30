@@ -111,6 +111,7 @@ namespace StarterAssets
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
+        private PlayerManager _playerManager;
 
         private bool IsCurrentDeviceMouse
         {
@@ -152,10 +153,14 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            _playerManager = GetComponent<PlayerManager>();
         }
 
         private void Update()
         {
+            if (_playerManager.IsDead) {
+                return;
+            }
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
@@ -165,6 +170,9 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
+            if (_playerManager.IsDead) {
+                return;
+            }
             CameraRotation();
         }
 

@@ -1016,6 +1016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  respawnTimeInSeconds: 4
 --- !u!114 &2433674357960784971
 MonoBehaviour:
   m_ObjectHideFlags: 0
