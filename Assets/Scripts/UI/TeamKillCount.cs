@@ -31,8 +31,8 @@ public class TeamKillCount : MonoBehaviour {
                 m_isKillCountOn = true;
                 highestKills.Clear();
                 for (int i = 0; i < 6; i++) {
-                    highestKills.Add(new Kills(m_namesGameObject.GetComponent<NicknamesScript>().names[i].text,
-                        m_namesGameObject.GetComponent<NicknamesScript>().kills[i]));
+                    highestKills.Add(new Kills(m_namesGameObject.GetComponent<HealthBarsManager>().names[i].text,
+                        m_namesGameObject.GetComponent<HealthBarsManager>().kills[i]));
                 }
                 redTeamKills = highestKills[0].playerKills + highestKills[1].playerKills + highestKills[2].playerKills;
                 greenTeamKills = highestKills[3].playerKills + highestKills[4].playerKills +
@@ -53,8 +53,8 @@ public class TeamKillCount : MonoBehaviour {
         m_isKillCountOn = true;
         highestKills.Clear();
         for (int i = 0; i < 6; i++) {
-            highestKills.Add(new Kills(m_namesGameObject.GetComponent<NicknamesScript>().names[i].text,
-                m_namesGameObject.GetComponent<NicknamesScript>().kills[i]));
+            highestKills.Add(new Kills(m_namesGameObject.GetComponent<HealthBarsManager>().names[i].text,
+                m_namesGameObject.GetComponent<HealthBarsManager>().kills[i]));
         }
         redTeamKills = highestKills[0].playerKills + highestKills[1].playerKills + highestKills[2].playerKills;
         greenTeamKills = highestKills[3].playerKills + highestKills[4].playerKills +

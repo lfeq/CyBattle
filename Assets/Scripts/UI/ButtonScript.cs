@@ -27,7 +27,8 @@ public class ButtonScript : MonoBehaviour {
         Cursor.visible = false;
         m_panel.SetActive(false);
     }
-
+    
+    //TODO: Optimize way to assign color to player
     [PunRPC]
     private void selectColor(int t_buttonNumber, int t_myId) {
         m_players = GameObject.FindGameObjectsWithTag("Player");

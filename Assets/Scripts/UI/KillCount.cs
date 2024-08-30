@@ -29,8 +29,8 @@ public class KillCount : MonoBehaviour {
                     m_isKillCountOn = true;
                     highestKillsList.Clear();
                     for (int i = 0; i < textNames.Length; i++) {
-                        highestKillsList.Add(new Kills(m_namesGameObject.GetComponent<NicknamesScript>().names[i].text,
-                            m_namesGameObject.GetComponent<NicknamesScript>().kills[i]));
+                        highestKillsList.Add(new Kills(m_namesGameObject.GetComponent<HealthBarsManager>().names[i].text,
+                            m_namesGameObject.GetComponent<HealthBarsManager>().kills[i]));
                     }
                     highestKillsList.Sort();
                     for (int i = 0; i < textNames.Length; i++) {
@@ -60,8 +60,8 @@ public class KillCount : MonoBehaviour {
         m_isKillCountOn = true;
         highestKillsList.Clear();
         for (int i = 0; i < textNames.Length; i++) {
-            highestKillsList.Add(new Kills(m_namesGameObject.GetComponent<NicknamesScript>().names[i].text,
-                m_namesGameObject.GetComponent<NicknamesScript>().kills[i]));
+            highestKillsList.Add(new Kills(m_namesGameObject.GetComponent<HealthBarsManager>().names[i].text,
+                m_namesGameObject.GetComponent<HealthBarsManager>().kills[i]));
         }
         highestKillsList.Sort();
         winnerText.text = highestKillsList[0].playerName;
